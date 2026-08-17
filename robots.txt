@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://saltedmint.github.io/ez_recipe_skku/sitemap.xml
