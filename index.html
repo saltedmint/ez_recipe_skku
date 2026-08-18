@@ -56,9 +56,16 @@ function toast(){$('#toast').classList.add('show');setTimeout(()=>$('#toast').cl
   const modalStyle = document.createElement('style');
   modalStyle.textContent = '#result.recipe-modal{position:fixed;z-index:20;left:50%;top:50%;width:min(920px,calc(100% - 32px));max-height:calc(100vh - 32px);overflow:auto;transform:translate(-50%,-50%);box-shadow:0 0 0 100vmax rgba(0,0,0,.58),0 18px 45px rgba(0,0,0,.28);animation:modalIn .22s ease-out}#result.recipe-modal[hidden]{display:none}@keyframes modalIn{from{opacity:0;transform:translate(-50%,-47%) scale(.98)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}#result .close-btn{width:42px;height:42px;border-radius:50%;border:1px solid #ffffff65;color:#fff;background:transparent;font-size:25px;line-height:1}@media(max-width:800px){#result.recipe-modal{max-height:calc(100vh - 20px);width:calc(100% - 20px)}}';
   document.head.appendChild(modalStyle);
+  const nutritionStyle = document.createElement('style');
+  nutritionStyle.textContent = '.nutrition{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.nutrition span{background:#ffffff12;border:1px solid #ffffff2b;border-radius:50px;padding:8px 11px;color:#fff;font-size:12px}';
+  document.head.appendChild(nutritionStyle);
   const originalRenderResult = window.renderResult;
   window.renderResult = function(recipe){
     originalRenderResult(recipe);
+    const used = (recipe.ingredientsUsed || []).join(' ');
+    const nutrition = recipe.nutrition || (used.includes('라면') ? {calories:'약 490kcal',protein:'단백질 14g',carbs:'탄수화물 68g',fat:'지방 17g'} : used.includes('밥') ? {calories:'약 520kcal',protein:'단백질 19g',carbs:'탄수화물 72g',fat:'지방 16g'} : used.includes('식빵') ? {calories:'약 380kcal',protein:'단백질 16g',carbs:'탄수화물 43g',fat:'지방 15g'} : {calories:'약 350kcal',protein:'단백질 18g',carbs:'탄수화물 28g',fat:'지방 16g'});
+    const nutritionEl = document.createElement('div'); nutritionEl.className='nutrition'; nutritionEl.innerHTML='<span>🔥 '+nutrition.calories+'</span><span>'+nutrition.protein+'</span><span>'+nutrition.carbs+'</span><span>'+nutrition.fat+'</span>';
+    recipeModal.querySelector('.result-grid').before(nutritionEl);
     recipeModal.classList.add('recipe-modal');
     recipeModal.hidden = false;
     const actions = recipeModal.querySelector('.actions');
