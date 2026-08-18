@@ -61,6 +61,7 @@ function toast(){$('#toast').classList.add('show');setTimeout(()=>$('#toast').cl
   document.head.appendChild(nutritionStyle);
   const originalRenderResult = window.renderResult;
   window.renderResult = function(recipe){
+    if(recipe.steps && recipe.steps.length < 5){const extras=['4단계: 불을 약하게 줄이고 재료가 양념을 충분히 머금도록 1분 더 익힙니다.','5단계: 불을 끄고 간을 확인한 뒤 접시에 예쁘게 담아냅니다.'];recipe.steps=[...recipe.steps,...extras].slice(0,5)}
     originalRenderResult(recipe);
     const used = (recipe.ingredientsUsed || []).join(' ');
     const nutrition = recipe.nutrition || (used.includes('라면') ? {calories:'약 490kcal',protein:'단백질 14g',carbs:'탄수화물 68g',fat:'지방 17g'} : used.includes('밥') ? {calories:'약 520kcal',protein:'단백질 19g',carbs:'탄수화물 72g',fat:'지방 16g'} : used.includes('식빵') ? {calories:'약 380kcal',protein:'단백질 16g',carbs:'탄수화물 43g',fat:'지방 15g'} : {calories:'약 350kcal',protein:'단백질 18g',carbs:'탄수화물 28g',fat:'지방 16g'});
