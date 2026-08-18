@@ -57,7 +57,7 @@ function toast(){$('#toast').classList.add('show');setTimeout(()=>$('#toast').cl
   modalStyle.textContent = '#result.recipe-modal{position:fixed;z-index:20;left:50%;top:50%;width:min(920px,calc(100% - 32px));max-height:calc(100vh - 32px);overflow:auto;transform:translate(-50%,-50%);box-shadow:0 0 0 100vmax rgba(0,0,0,.58),0 18px 45px rgba(0,0,0,.28);animation:modalIn .22s ease-out}#result.recipe-modal[hidden]{display:none}@keyframes modalIn{from{opacity:0;transform:translate(-50%,-47%) scale(.98)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}#result .close-btn{width:42px;height:42px;border-radius:50%;border:1px solid #ffffff65;color:#fff;background:transparent;font-size:25px;line-height:1}@media(max-width:800px){#result.recipe-modal{max-height:calc(100vh - 20px);width:calc(100% - 20px)}}';
   document.head.appendChild(modalStyle);
   const nutritionStyle = document.createElement('style');
-  nutritionStyle.textContent = '.nutrition{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.nutrition span{background:#ffffff12;border:1px solid #ffffff2b;border-radius:50px;padding:8px 11px;color:#fff;font-size:12px}';
+  nutritionStyle.textContent = '.nutrition{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.nutrition span{background:#ffffff12;border:1px solid #ffffff2b;border-radius:50px;padding:8px 11px;color:#fff;font-size:12px}.label-btn{width:auto;padding:0 14px;font-size:13px;white-space:nowrap}';
   document.head.appendChild(nutritionStyle);
   const originalRenderResult = window.renderResult;
   window.renderResult = function(recipe){
@@ -74,9 +74,9 @@ function toast(){$('#toast').classList.add('show');setTimeout(()=>$('#toast').cl
     close.className = 'close-btn'; close.type = 'button'; close.setAttribute('aria-label','레시피 닫기'); close.textContent = '×';
     close.onclick = () => { recipeModal.hidden = true; };
     actions.appendChild(close);
-    const copy = recipeModal.querySelector('#copy');
+    const copy = recipeModal.querySelector('#copy'); if(copy){copy.classList.add('label-btn');copy.textContent='↗ 복사';}
     if(copy) copy.addEventListener('click',()=>gtag('event','recipe_copy',{recipe_name:recipe.recipeName}));
-    const share = recipeModal.querySelector('#share');
+    const share = recipeModal.querySelector('#share'); if(share){share.classList.add('label-btn');share.textContent='⌯ 공유';}
     if(share) share.addEventListener('click',()=>gtag('event','recipe_share_click',{recipe_name:recipe.recipeName}));
   };
 </script></body></html>
